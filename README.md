@@ -15,6 +15,9 @@ Cache Redis Config is a lightweight yet powerful library that provides a standar
 - **Customizable Serialization**: Allows custom serialization and deserialization of cached data.
 - **Health Checks**: Built-in health checks to monitor Redis connection status.
 - **Logging Integration**: Easily integrate with your application’s logging framework for debugging and monitoring.
+- **Rate Limiting**: Integrated rate limiting to prevent abuse and ensure fair usage.
+- **Atomic Operations**: Support for atomic operations to ensure data consistency.
+- **Batch Operations**: Perform batch operations for improved efficiency.
 
 ## Technologies Used
 
@@ -24,13 +27,14 @@ Cache Redis Config is a lightweight yet powerful library that provides a standar
 - **pydantic**: Used for data validation and settings management.
 - **logging**: Integrated for logging and monitoring purposes.
 - **asyncio**: Support for asynchronous operations for improved performance.
+- **hiredis**: Optional high-performance parser for Redis responses.
 
 ## Installation
 
 To install Cache Redis Config, you can use `pip`, Python's package manager. Run the following command:
 
 ```bash
-pip install cache-redis-config
+pip install cache-redis-config[hiredis]
 ```
 
 If you prefer to install it from the source, follow these steps:
@@ -56,7 +60,7 @@ If you prefer to install it from the source, follow these steps:
 4. Install the package:
 
    ```bash
-   pip install .
+   pip install .[hiredis]
    ```
 
 ## Usage
@@ -78,6 +82,14 @@ print(value)  # Output: 'my_value'
 
 # Delete a value from the cache
 cache.delete('my_key')
+
+# Batch operations
+cache.set_many({'key1': 'value1', 'key2': 'value2'})
+values = cache.get_many(['key1', 'key2'])
+print(values)  # Output: {'key1': 'value1', 'key2': 'value2'}
+
+# Atomic increment
+cache.incr('counter')
 ```
 
 For more advanced usage and configuration options, please refer to the [documentation](https://github.com/yourusername/cache-redis-config/wiki).
